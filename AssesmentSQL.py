@@ -15,3 +15,7 @@ c.execute("""CREATE TABLE brawlers (
 
 conn.commit()
 conn.close()
+
+#test comment for commit
+
+print("All done!")
