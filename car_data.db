@@ -1,0 +1,66 @@
+-- Create tables for cars, manufacturers, and car details
+CREATE TABLE Manufacturers (
+    ManufacturerID INT PRIMARY KEY,
+    Name VARCHAR(100)
+);
+
+CREATE TABLE Cars (
+    CarID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    TopSpeed_MPH INT,
+    Acceleration_0_60 DECIMAL(3,1),
+    ManufacturerID INT,
+    FOREIGN KEY (ManufacturerID) REFERENCES Manufacturers(ManufacturerID)
+);
+
+CREATE TABLE CarDetails (
+    CarID INT PRIMARY KEY,
+    Description TEXT
+);
+
+-- Insert data into the Manufacturers table
+INSERT INTO Manufacturers (ManufacturerID, Name)
+VALUES 
+    (1, 'Bugatti'),
+    (2, 'SSC'),
+    (3, 'Hennessey'),
+    (4, 'Rimac'),
+    (5, 'McLaren'),
+    (6, 'Koenigsegg'),
+    (7, 'Aston Martin');
+
+-- Insert data into the Cars table
+INSERT INTO Cars (CarID, Name, TopSpeed_MPH, Acceleration_0_60, ManufacturerID)
+VALUES 
+    (1, 'Bugatti Chiron Supersport 300+', 304, 2.2, 1),
+    (2, 'SSC Tuatara', 295, 2.5, 2),
+    (3, 'Hennessey Venom F5', 272, 2.6, 3),
+    (4, 'Rimac Nevera', 258, 1.9, 4),
+    (5, 'McLaren Speedtail', 250, 2.5, 5),
+    (6, 'Koenigsegg Regera', 250, 2.8, 6),
+    (7, 'Aston Martin Valkyrie', 250, 2.2, 7);
+
+-- Insert data into the CarDetails table
+INSERT INTO CarDetails (CarID, Description)
+VALUES
+    (1, '8.0-litre quad turbocharged 1,600hp engine'),
+    (2, 'Twin-turbocharged V8 engine with up to 1,750hp'),
+    (3, '6.6-litre twin-turbocharged V8 engine with 1,817hp'),
+    (4, 'Four electric motors producing 1,914hp'),
+    (5, 'Super-slippery bodywork with futuristic design'),
+    (6, 'Twin-turbo V8 engine with electric motor, total 1,500hp'),
+    (7, '6.5-litre hybrid V12 engine with 1,160hp');
+
+-- Query to retrieve all car data with manufacturer names
+SELECT 
+    c.Name AS CarName,
+    m.Name AS Manufacturer,
+    c.TopSpeed_MPH,
+    c.Acceleration_0_60,
+    cd.Description
+FROM 
+    Cars c
+JOIN 
+    CarDetails cd ON c.CarID = cd.CarID
+JOIN 
+    Manufacturers m ON c.ManufacturerID = m.ManufacturerID;
